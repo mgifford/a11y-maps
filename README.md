@@ -97,7 +97,7 @@ a11y-maps/
 ├── 📄 QUICKSTART.md                 # Getting started guide
 ├── 📄 CONTRIBUTING.md               # Contribution guidelines
 ├── 📄 PROJECT-SUMMARY.md            # Complete implementation summary
-├── 📄 LICENSE                       # MIT license
+├── 📄 LICENSE                       # AGPL license
 └── 📄 .gitignore                    # Git ignore patterns
 ```
 
@@ -210,7 +210,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 ## License
 
-MIT License - See LICENSE file for details
+AGPL License - See LICENSE file for details
 
 ## Disclaimer
 
