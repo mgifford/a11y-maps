@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How This Map Is Accessible - Accessible Municipal Map Demo</title>
+  <meta name="description" content="Detailed documentation of accessibility features, keyboard navigation, and design decisions">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/map.css">
+</head>
+<body>
+  <div class="page-container">
+    <!-- Header -->
+    <header class="page-header" role="banner">
+      <h1>How This Map Is Accessible</h1>
+      <p>Documentation of accessibility features, keyboard navigation, and technical approach</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="page-nav" role="navigation" aria-label="Main navigation">
+      <ul>
+        <li><a href="dig-safety.html">Where Should I Not Dig?</a></li>
+        <li><a href="explorer.html">Utilities Explorer</a></li>
+        <li><a href="accessibility.html" aria-current="page">How This Map Is Accessible</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content" role="main">
+
+      <!-- Introduction -->
+      <section aria-labelledby="intro-heading">
+        <h2 id="intro-heading">Purpose and Philosophy</h2>
+        <div class="card">
+          <p>
+            This demonstration shows how to make municipal GIS data accessible to people who are blind, 
+            have low vision, are color-blind, or use keyboard-only navigation.
+          </p>
+          <p>
+            <strong>Core principle:</strong> The map is a <em>secondary visual aid</em>, not the primary interface. 
+            All essential information is available in structured text that works with assistive technology.
+          </p>
+        </div>
+      </section>
+
+      <!-- What Works -->
+      <section aria-labelledby="works-heading">
+        <h2 id="works-heading">What This Map Can Do</h2>
+        <div class="card">
+          <ul>
+            <li>Answer civic questions (e.g., "Should I not dig here?") without requiring visual map interaction</li>
+            <li>Provide all feature information in accessible text format</li>
+            <li>Support full keyboard navigation with no mouse required</li>
+            <li>Distinguish features using color + pattern + width, not color alone</li>
+            <li>Synchronize selections between text lists and visual map</li>
+            <li>Announce changes to screen readers via ARIA live regions</li>
+            <li>Work with the map completely hidden</li>
+            <li>Scale text and zoom without breaking functionality</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- What Doesn't Work -->
+      <section aria-labelledby="limitations-heading">
+        <h2 id="limitations-heading">Known Limitations</h2>
+        <div class="card">
+          <ul>
+            <li>Individual map shapes are not exposed as ARIA objects (this is intentional - text lists provide better UX)</li>
+            <li>Spatial relationships (e.g., "How far is X from Y?") not fully conveyed in text</li>
+            <li>Map panning and zooming requires spatial awareness</li>
+            <li>Complex overlapping features may be hard to distinguish visually</li>
+            <li>This is a demonstration, not production-ready code</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Keyboard Navigation -->
+      <section aria-labelledby="keyboard-heading">
+        <h2 id="keyboard-heading">Keyboard Navigation</h2>
+        <div class="card">
+          <h3>Global Navigation</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><kbd>Tab</kbd></td>
+                <td>Move to next interactive element</td>
+              </tr>
+              <tr>
+                <td><kbd>Shift + Tab</kbd></td>
+                <td>Move to previous interactive element</td>
+              </tr>
+              <tr>
+                <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>
+                <td>Activate buttons, checkboxes, and list items</td>
+              </tr>
+              <tr>
+                <td><kbd>Escape</kbd></td>
+                <td>Close dialogs or modals</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>List Navigation</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><kbd>↑</kbd> Up Arrow</td>
+                <td>Move to previous list item</td>
+              </tr>
+              <tr>
+                <td><kbd>↓</kbd> Down Arrow</td>
+                <td>Move to next list item</td>
+              </tr>
+              <tr>
+                <td><kbd>Home</kbd></td>
+                <td>Move to first list item</td>
+              </tr>
+              <tr>
+                <td><kbd>End</kbd></td>
+                <td>Move to last list item</td>
+              </tr>
+              <tr>
+                <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>
+                <td>Select item and highlight on map</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Focus Indicators</h3>
+          <p>
+            All interactive elements have visible focus indicators with:
+          </p>
+          <ul>
+            <li>3px blue outline</li>
+            <li>2px offset from element</li>
+            <li>Sufficient contrast ratio (4.5:1 minimum)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Screen Reader Support -->
+      <section aria-labelledby="screenreader-heading">
+        <h2 id="screenreader-heading">Screen Reader Support</h2>
+        <div class="card">
+          <h3>Semantic HTML</h3>
+          <p>All content uses proper HTML5 semantic elements:</p>
+          <ul>
+            <li><code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code> for page structure</li>
+            <li><code>&lt;section&gt;</code> with <code>aria-labelledby</code> for major content areas</li>
+            <li><code>&lt;ul&gt;</code> and <code>&lt;ol&gt;</code> for lists</li>
+            <li><code>&lt;table&gt;</code> with proper headers for data tables</li>
+          </ul>
+
+          <h3>ARIA Live Regions</h3>
+          <p>Dynamic content changes are announced via ARIA live regions:</p>
+          <ul>
+            <li>Feature selections</li>
+            <li>Layer visibility changes</li>
+            <li>Map visibility toggles</li>
+            <li>City changes</li>
+          </ul>
+
+          <h3>ARIA Labels and Descriptions</h3>
+          <ul>
+            <li>All form controls have associated labels</li>
+            <li>Icon-only buttons have <code>aria-label</code> attributes</li>
+            <li>Complex widgets have <code>aria-describedby</code> for additional context</li>
+            <li>Current page indicated with <code>aria-current="page"</code></li>
+          </ul>
+
+          <h3>Alternative Text</h3>
+          <ul>
+            <li>Decorative icons marked with <code>aria-hidden="true"</code></li>
+            <li>Meaningful icons have text alternatives</li>
+            <li>Risk levels include both visual badges and text labels</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Visual Accessibility -->
+      <section aria-labelledby="visual-heading">
+        <h2 id="visual-heading">Visual Accessibility</h2>
+        <div class="card">
+          <h3>Color Independence</h3>
+          <p>Information is never conveyed by color alone. Every feature uses multiple visual channels:</p>
+          <ul>
+            <li><strong>Gas lines:</strong> Gold color + solid line + 4px width</li>
+            <li><strong>Water mains:</strong> Blue color + dashed line + 3px width</li>
+            <li><strong>Sewer lines:</strong> Brown color + dotted line + 3px width</li>
+            <li><strong>Electrical:</strong> Orange color + double-dashed line + 3px width</li>
+            <li><strong>Restrictions:</strong> Red fill + diagonal hatching + semi-transparent</li>
+          </ul>
+
+          <h3>Contrast Ratios</h3>
+          <p>All text and UI elements meet WCAG AA standards:</p>
+          <ul>
+            <li>Regular text: 4.5:1 minimum</li>
+            <li>Large text (18pt+): 3:1 minimum</li>
+            <li>UI components: 3:1 minimum</li>
+            <li>Focus indicators: 3:1 against background</li>
+          </ul>
+
+          <h3>Text Alternatives in Legend</h3>
+          <p>
+            The legend provides complete textual description of every visual encoding:
+          </p>
+          <ul>
+            <li>Feature name</li>
+            <li>Feature type and description</li>
+            <li>Color value (hex code)</li>
+            <li>Pattern name (solid, dashed, dotted)</li>
+            <li>Line width in pixels</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Map Interaction Model -->
+      <section aria-labelledby="interaction-heading">
+        <h2 id="interaction-heading">Map Interaction Model</h2>
+        <div class="card">
+          <h3>Text-First Approach</h3>
+          <p>
+            All civic questions are answered primarily through structured text:
+          </p>
+          <ul>
+            <li><strong>Address selection:</strong> Standard HTML select dropdown</li>
+            <li><strong>Results:</strong> Plain language summary with structured list</li>
+            <li><strong>Feature details:</strong> Expandable text with all properties</li>
+            <li><strong>Map view:</strong> Optional visual confirmation</li>
+          </ul>
+
+          <h3>Bidirectional Synchronization</h3>
+          <p>Selections work in both directions:</p>
+          <ul>
+            <li>Clicking a feature in the text list highlights it on the map</li>
+            <li>Clicking a feature on the map selects it in the text list</li>
+            <li>Both actions announced to screen readers</li>
+          </ul>
+
+          <h3>Map Can Be Hidden</h3>
+          <p>
+            The map can be completely hidden without losing functionality. 
+            A "Hide Map" button demonstrates that all information remains available in text format.
+          </p>
+        </div>
+      </section>
+
+      <!-- Technical Implementation -->
+      <section aria-labelledby="technical-heading">
+        <h2 id="technical-heading">Technical Implementation</h2>
+        <div class="card">
+          <h3>Technology Stack</h3>
+          <ul>
+            <li><strong>Frontend:</strong> Vanilla HTML, CSS, JavaScript (ES6+)</li>
+            <li><strong>Mapping:</strong> Leaflet.js with OpenStreetMap tiles</li>
+            <li><strong>Data:</strong> GeoJSON for all features</li>
+            <li><strong>Hosting:</strong> Static site (GitHub Pages compatible)</li>
+          </ul>
+
+          <h3>Key Design Patterns</h3>
+          <ul>
+            <li>Progressive enhancement (works without JavaScript for basic content)</li>
+            <li>Responsive design (adapts to mobile and desktop)</li>
+            <li>Separation of data and presentation</li>
+            <li>Explicit semantic metadata on all features</li>
+          </ul>
+
+          <h3>Data Model</h3>
+          <p>Every feature includes:</p>
+          <ul>
+            <li><code>id</code>: Unique identifier</li>
+            <li><code>feature_type</code>: Semantic type (gas_line, water_main, etc.)</li>
+            <li><code>risk_level</code>: high, medium, advisory, or none</li>
+            <li><code>restriction</code>: Plain language explanation</li>
+            <li><code>description</code>: Human-readable description</li>
+            <li><code>data_status</code>: real_osm, hypothetical, or synthetic</li>
+            <li><code>authority</code>: Responsible organization</li>
+            <li>Visual encoding properties (color, pattern, width)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Privacy -->
+      <section aria-labelledby="privacy-heading">
+        <h2 id="privacy-heading">Privacy and Data Handling</h2>
+        <div class="card">
+          <h3>Location Privacy</h3>
+          <p>
+            Browser geolocation is used <em>only</em> to select a nearby demonstration city. 
+            The application:
+          </p>
+          <ul>
+            <li>Does NOT store your precise coordinates</li>
+            <li>Does NOT transmit your location to any server</li>
+            <li>Only determines the nearest major city (>100k population)</li>
+            <li>Uses localStorage only for generated demo data (not personal data)</li>
+            <li>Works perfectly if you deny location permission</li>
+          </ul>
+
+          <h3>No Tracking</h3>
+          <ul>
+            <li>No analytics or tracking scripts</li>
+            <li>No cookies</li>
+            <li>No user accounts or authentication</li>
+            <li>No data sent to external services</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Data Disclaimer -->
+      <section aria-labelledby="disclaimer-heading">
+        <h2 id="disclaimer-heading">Data Disclaimer</h2>
+        <div class="alert alert-danger">
+          <h3>⚠️ CRITICAL SAFETY NOTICE</h3>
+          <p>
+            <strong>All utility and restriction data in this demonstration is FICTIONAL and ILLUSTRATIVE ONLY.</strong>
+          </p>
+          <ul>
+            <li>This is a demonstration of accessibility techniques, not actual municipal data</li>
+            <li>Gas, water, sewer, and electrical utility locations are hypothetical</li>
+            <li>Excavation restriction zones are synthetic examples</li>
+            <li>Property boundaries are approximate or generated</li>
+            <li><strong>NEVER use this data for actual excavation planning</strong></li>
+            <li>Always contact your local utility locator service (dial 811 in North America) before digging</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Evaluation Criteria -->
+      <section aria-labelledby="evaluation-heading">
+        <h2 id="evaluation-heading">Success Criteria</h2>
+        <div class="card">
+          <p>This demonstration is successful if:</p>
+          <ul>
+            <li>✓ A blind user can determine excavation restrictions for an address</li>
+            <li>✓ A color-blind user can distinguish between different utility types</li>
+            <li>✓ A keyboard-only user can access all functionality</li>
+            <li>✓ An accessibility reviewer can clearly understand the approach</li>
+            <li>✓ Municipal staff can use this as a reference for their own implementations</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Further Resources -->
+      <section aria-labelledby="resources-heading">
+        <h2 id="resources-heading">Further Resources</h2>
+        <div class="card">
+          <h3>Standards and Guidelines</h3>
+          <ul>
+            <li><a href="https://www.w3.org/WAI/WCAG21/quickref/">WCAG 2.1 Quick Reference</a></li>
+            <li><a href="https://www.w3.org/WAI/ARIA/apg/">ARIA Authoring Practices Guide</a></li>
+            <li><a href="https://webaim.org/">WebAIM - Web Accessibility Resources</a></li>
+          </ul>
+
+          <h3>Testing Tools</h3>
+          <ul>
+            <li>NVDA (free screen reader for Windows)</li>
+            <li>VoiceOver (built-in screen reader for macOS/iOS)</li>
+            <li>JAWS (commercial screen reader)</li>
+            <li>axe DevTools (browser extension for accessibility testing)</li>
+            <li>Keyboard navigation (no tools needed - just unplug your mouse!)</li>
+          </ul>
+
+          <h3>Related Projects</h3>
+          <ul>
+            <li><a href="https://www.openstreetmap.org/">OpenStreetMap</a> - Collaborative mapping data</li>
+            <li><a href="https://leafletjs.com/">Leaflet.js</a> - Open source mapping library</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section aria-labelledby="contact-heading">
+        <h2 id="contact-heading">Feedback and Questions</h2>
+        <div class="card">
+          <p>
+            This is a demonstration project to show best practices for accessible municipal maps. 
+            If you have questions, suggestions, or find accessibility issues, please file an issue 
+            on the project repository.
+          </p>
+          <p>
+            <strong>Remember:</strong> This is illustrative code, not production-ready software. 
+            Adapt these patterns to your specific needs and always test with real users.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer" role="contentinfo">
+      <p>Accessible Municipal Map Demo &copy; 2026 | 
+        Data: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
+      </p>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/config.js"></script>
+  <script src="js/accessibility.js"></script>
+</body>
+</html>

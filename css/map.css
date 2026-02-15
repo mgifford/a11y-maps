@@ -1,0 +1,384 @@
+/**
+ * Map-specific styles
+ * Ensures map is visually accessible and works as secondary interface
+ */
+
+/* Map container */
+.map-container {
+  position: relative;
+  background-color: var(--color-bg-alt);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Ensure any direct child map element inside .map-wrapper fills the wrapper
+   (some pages use different IDs like #results-map) */
+.map-wrapper > * {
+  width: 100%;
+  height: 100%;
+}
+
+/* Map is secondary - can be hidden without losing functionality */
+.map-container[data-map-hidden="true"] .map-wrapper {
+  display: none;
+}
+
+.map-container[data-map-hidden="true"]::after {
+  content: "Map view hidden. All information available in text format below.";
+  display: block;
+  padding: var(--spacing-md);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* Map controls */
+.map-controls {
+  padding: var(--spacing-md);
+  background-color: var(--color-bg-alt);
+  border-bottom: var(--border-width) solid var(--color-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.map-toggle-button {
+  margin-left: auto;
+}
+
+/* Legend */
+.map-legend {
+  background-color: white;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.map-legend h3 {
+  margin-top: 0;
+  font-size: 1.125rem;
+}
+
+.legend-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) 0;
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.legend-item:last-child {
+  border-bottom: none;
+}
+
+.legend-symbol {
+  flex-shrink: 0;
+  width: 60px;
+  height: 24px;
+  border: var(--border-width) solid var(--color-border);
+  position: relative;
+  background-color: white;
+}
+
+/* Line patterns */
+.legend-symbol-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.legend-symbol[data-pattern="solid"] .legend-symbol-line {
+  border-top-style: solid;
+}
+
+.legend-symbol[data-pattern="dashed"] .legend-symbol-line {
+  border-top-style: dashed;
+}
+
+.legend-symbol[data-pattern="dotted"] .legend-symbol-line {
+  border-top-style: dotted;
+}
+
+.legend-symbol[data-pattern="double-dashed"] .legend-symbol-line {
+  border-top-style: dashed;
+  border-top-width: 3px;
+}
+
+/* Polygon patterns */
+.legend-symbol-fill {
+  width: 100%;
+  height: 100%;
+}
+
+.legend-symbol[data-pattern="diagonal-hatch"] .legend-symbol-fill {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 4px,
+    currentColor 4px,
+    currentColor 5px
+  );
+  opacity: 0.3;
+}
+
+.legend-label {
+  flex: 1;
+}
+
+.legend-label-name {
+  font-weight: bold;
+  display: block;
+}
+
+.legend-label-description {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  display: block;
+  margin-top: var(--spacing-xs);
+}
+
+.legend-encoding {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* Layer controls */
+.layer-controls {
+  background-color: white;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.layer-controls h3 {
+  margin-top: 0;
+  font-size: 1.125rem;
+}
+
+.layer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.layer-item {
+  padding: var(--spacing-sm) 0;
+}
+
+/* Feature list */
+.feature-list {
+  background-color: white;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.feature-list h3 {
+  margin-top: 0;
+}
+
+.feature-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feature-item {
+  padding: var(--spacing-md);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-md);
+  cursor: pointer;
+  position: relative;
+}
+
+.feature-item:hover,
+.feature-item:focus {
+  background-color: var(--color-bg-alt);
+  border-color: var(--color-primary);
+}
+
+.feature-item[aria-selected="true"] {
+  background-color: #e7f3ff;
+  border-color: var(--color-primary);
+  border-width: 2px;
+}
+
+.feature-item-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.feature-item-icon {
+  font-size: 1.5rem;
+}
+
+.feature-item-name {
+  font-weight: bold;
+  flex: 1;
+}
+
+.feature-item-risk {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.feature-item-risk[data-risk="high"] {
+  background-color: #dc3545;
+  color: white;
+}
+
+.feature-item-risk[data-risk="medium"] {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.feature-item-risk[data-risk="advisory"] {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.feature-item-risk[data-risk="none"] {
+  background-color: #6c757d;
+  color: white;
+}
+
+.feature-item-description {
+  margin: var(--spacing-sm) 0;
+  color: var(--color-text);
+}
+
+.feature-item-restriction {
+  padding: var(--spacing-sm);
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  margin: var(--spacing-sm) 0;
+  font-weight: bold;
+}
+
+.feature-item-meta {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-top: var(--spacing-sm);
+}
+
+.feature-item-status {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-bg-alt);
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+  margin-top: var(--spacing-xs);
+}
+
+.feature-item-status[data-status="hypothetical"] {
+  background-color: #fff3cd;
+  color: #856404;
+  font-weight: bold;
+}
+
+.feature-item-status[data-status="real_osm"] {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* Two-column layout for map and content */
+.split-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.split-layout-sidebar {
+  overflow-y: auto;
+  max-height: calc(100vh - 300px);
+}
+
+@media (max-width: 992px) {
+  .split-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .map-wrapper {
+    height: 400px;
+  }
+}
+
+/* Leaflet overrides for accessibility */
+.leaflet-container {
+  font-family: var(--font-family-base);
+}
+
+.leaflet-popup-content {
+  margin: var(--spacing-md);
+  line-height: var(--line-height-base);
+}
+
+.leaflet-control-attribution {
+  font-size: 0.75rem;
+}
+
+/* Ensure map markers are distinguishable */
+.leaflet-marker-icon:focus {
+  outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+}
+
+/* City selector */
+.city-selector {
+  min-width: 200px;
+}
+
+/* Privacy and disclaimer notices */
+.privacy-notice,
+.data-disclaimer {
+  font-size: 0.875rem;
+  padding: var(--spacing-sm);
+  margin: var(--spacing-md) 0;
+  border-radius: var(--border-radius);
+}
+
+.privacy-notice {
+  background-color: #d1ecf1;
+  border: var(--border-width) solid #17a2b8;
+  color: #0c5460;
+}
+
+.data-disclaimer {
+  background-color: #fff3cd;
+  border: var(--border-width) solid #ffc107;
+  color: #856404;
+  font-weight: bold;
+}

@@ -1,0 +1,19 @@
+{
+  "name": "a11y-maps",
+  "version": "1.0.0",
+  "description": "This is a static demonstration of accessibility best practices for municipal GIS web applications. It shows how to make civic map data accessible to blind, low-vision, color-blind, and keyboard-only users by treating maps as a **secondary visual aid** rather than the primary interface.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
+    "@playwright/test": "^1.58.2",
+    "http-server": "^14.1.1",
+    "playwright": "^1.58.2",
+    "vitest": "^4.0.18"
+  }
+}

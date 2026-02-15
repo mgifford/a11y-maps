@@ -1,0 +1,32 @@
+{
+  "version": 8,
+  "name": "Custom Demo Style (raster base)",
+  "sources": {
+    "osm-raster": {
+      "type": "raster",
+      "tiles": [
+        "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      ],
+      "tileSize": 256,
+      "attribution": "© OpenStreetMap contributors"
+    }
+  },
+  "glyphs": "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "#f2f2f4"
+      }
+    },
+    {
+      "id": "osm-raster-layer",
+      "type": "raster",
+      "source": "osm-raster",
+      "paint": {
+        "raster-opacity": 1
+      }
+    }
+  ]
+}

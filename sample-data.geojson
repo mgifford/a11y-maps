@@ -1,0 +1,70 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "title": "Sample Custom Layer",
+    "description": "Example GeoJSON file for testing the custom layer upload feature",
+    "generated": "2026-02-10"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "sample_point_1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-93.2650, 44.9778]
+      },
+      "properties": {
+        "id": "sample_point_1",
+        "name": "Sample Point Feature",
+        "feature_type": "custom",
+        "description": "This is a sample point you can see on the map",
+        "data_status": "custom",
+        "color": "#9C27B0"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "sample_line_1",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-93.2750, 44.9678],
+          [-93.2650, 44.9778],
+          [-93.2550, 44.9878]
+        ]
+      },
+      "properties": {
+        "id": "sample_line_1",
+        "name": "Sample Line Feature",
+        "feature_type": "custom",
+        "description": "This is a sample line crossing the area",
+        "data_status": "custom",
+        "color": "#E91E63",
+        "width": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "sample_polygon_1",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-93.2700, 44.9700],
+          [-93.2600, 44.9700],
+          [-93.2600, 44.9800],
+          [-93.2700, 44.9800],
+          [-93.2700, 44.9700]
+        ]]
+      },
+      "properties": {
+        "id": "sample_polygon_1",
+        "name": "Sample Polygon Area",
+        "feature_type": "custom",
+        "description": "This is a sample polygon area of interest",
+        "data_status": "custom",
+        "color": "#4CAF50",
+        "fillOpacity": 0.3
+      }
+    }
+  ]
+}

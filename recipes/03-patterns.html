@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe 03: Patterns & Polygons</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            line-height: 1.5;
+        }
+
+        .map-container {
+            height: 500px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .legend {
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .swatch {
+            width: 40px;
+            height: 25px;
+            border: 1px solid #333;
+        }
+
+        .pattern-residential {
+            background-color: #ffcccc;
+            background-image: linear-gradient(45deg, #e60000 25%, transparent 25%, transparent 50%, #e60000 50%, #e60000 75%, transparent 75%, transparent);
+            background-size: 10px 10px;
+        }
+
+        .pattern-commercial {
+            background-color: #ccccff;
+            background-image: radial-gradient(#0000cc 20%, transparent 20%),
+                radial-gradient(#0000cc 20%, transparent 20%);
+            background-position: 0 0, 5px 5px;
+            background-size: 10px 10px;
+        }
+
+        .pattern-industrial {
+            background-color: #ccffcc;
+            border: 3px double #006600;
+        }
+
+        .search-container {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .search-container label {
+            font-weight: bold;
+            margin-right: 0.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-container input {
+            padding: 0.5rem;
+            width: 300px;
+        }
+
+        .search-container button {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            background: #005fcc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .search-container button:hover {
+            background: #004499;
+        }
+
+        .search-result {
+            margin-top: 0.5rem;
+            font-weight: bold;
+            min-height: 1.5em;
+        }
+
+        .search-samples {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .search-samples code {
+            background: #e0e0e0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .controls {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <nav>
+            <a href="../index.html">← Back to Menu</a>
+        </nav>
+
+        <h1>Recipe 03: Patterns & Polygons</h1>
+        <p>
+            Color blindness affects ~8% of men.
+            <strong>Never rely on color alone</strong> to distinguish map regions.
+            Use patterns (hatching, dots, borders) alongside color.
+        </p>
+
+        <!-- Address Search -->
+        <!-- Address Search -->
+        <div class="search-container">
+            <label for="address-input">Find Zone by Address:</label>
+            <div class="search-row">
+                <input type="text" id="address-input" placeholder="e.g., 57 Wapping Wall..." list="address-suggestions">
+                <button onclick="searchAddress()">Search</button>
+            </div>
+            <datalist id="address-suggestions">
+                <option value="57 Wapping Wall (Commercial)">
+                <option value="15 Prescot St (Residential)">
+                <option value="251 Tooley St (Industrial)">
+                <option value="County Hall (Outside)">
+            </datalist>
+
+            <div id="search-result" class="search-result" aria-live="polite"></div>
+
+            <div class="search-samples">
+                Try:
+                <span onclick="document.getElementById('address-input').value='57 Wapping Wall'; searchAddress()"
+                    style="text-decoration: underline; cursor: pointer;">57 Wapping Wall</span>,
+                <span onclick="document.getElementById('address-input').value='15 Prescot St'; searchAddress()"
+                    style="text-decoration: underline; cursor: pointer;">15 Prescot St</span>,
+                <span onclick="document.getElementById('address-input').value='251 Tooley St'; searchAddress()"
+                    style="text-decoration: underline; cursor: pointer;">251 Tooley St</span>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls" aria-label="Map Display Controls">
+            <div class="control-group">
+                <label for="opacity-slider">Zone Opacity: <span id="opacity-val">100%</span></label>
+                <input type="range" id="opacity-slider" min="0" max="1" step="0.1" value="1" oninput="updateStyle()">
+            </div>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="outline-toggle" checked onchange="updateStyle()">
+                    Show Outlines
+                </label>
+            </div>
+        </div>
+
+        <!-- HTML Legend (Interactive) -->
+        <div class="legend" aria-label="Zoning Legend. Click items to find on map.">
+            <!-- West End -->
+            <div class="legend-item" role="button" tabindex="0" onclick="focusZone('West End')"
+                onkeydown="if(event.key==='Enter'||event.key===' ') focusZone('West End')">
+                <div class="swatch pattern-industrial" aria-hidden="true"></div>
+                <span>
+                    <strong>West End (Industrial)</strong><br>
+                    <small>Green, Double Border</small>
+                </span>
+            </div>
+            <!-- Downtown -->
+            <div class="legend-item" role="button" tabindex="0" onclick="focusZone('Downtown')"
+                onkeydown="if(event.key==='Enter'||event.key===' ') focusZone('Downtown')">
+                <div class="swatch pattern-residential" aria-hidden="true"></div>
+                <span>
+                    <strong>Downtown (Residential)</strong><br>
+                    <small>Red, Diagonal Hatch</small>
+                </span>
+            </div>
+            <!-- River District -->
+            <div class="legend-item" role="button" tabindex="0" onclick="focusZone('River District')"
+                onkeydown="if(event.key==='Enter'||event.key===' ') focusZone('River District')">
+                <div class="swatch pattern-commercial" aria-hidden="true"></div>
+                <span>
+                    <strong>River District (Commercial)</strong><br>
+                    <small>Blue, Polka Dot</small>
+                </span>
+            </div>
+        </div>
+
+        <figure aria-labelledby="map-caption">
+            <figcaption id="map-caption" class="visually-hidden">
+                Zoning map showing Residential (diagonal hatch), Commercial (dots), and Industrial (double border)
+                zones.
+            </figcaption>
+            <div id="map" class="map-container" role="application" aria-label="Zoning map" tabindex="0"></div>
+        </figure>
+
+        <section style="margin-top: 2rem; border-top: 1px solid #ccc; padding-top: 1rem;">
+            <h2>Accessibility Features</h2>
+            <ul>
+                <li><strong>Redundant Coding:</strong> Regions are distinguished by Color + Pattern (SVG fills). This
+                    accommodates color blindness.</li>
+                <li><strong>HTML Legend:</strong> The legend is not part of the map canvas image. It is standard HTML
+                    text, making it accessible to screen readers and searchable.</li>
+                <li><strong>The "Search Alternative":</strong> Spatial queries ("What zone is this address in?") are
+                    hard for blind users. We provide a simple text-based search form that answers the user's question
+                    directly, bypassing the map entirely.</li>
+            </ul>
+
+            <h2>Try This</h2>
+            <ol>
+                <li><strong>Use the Search:</strong> Enter "57 Wapping Wall" and press Enter. Notice how it finds the
+                    zone without you needing to look at the map.</li>
+                <li><strong>Observe Visual Connection:</strong> When a result is found, we fly the map to the location,
+                    visually connecting the data point to its context.</li>
+                <li><strong>Interactive Legend:</strong> Click or Tab to the legend items to jump to that zone.</li>
+            </ol>
+        </section>
+
+    </main>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        const map = L.map('map').setView([51.508, -0.11], 13);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19, attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+
+        // Inject SVG Patterns
+        const svgPatterns = `
+        <svg style="position: absolute; width: 0; height: 0; pointer-events: none;">
+            <defs>
+                <pattern id="hatch-red" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                    <rect width="10" height="10" fill="#ffcccc" fill-opacity="0.5"/>
+                    <line x1="0" y1="0" x2="0" y2="10" stroke="#e60000" stroke-width="2" />
+                </pattern>
+                <pattern id="dot-blue" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <rect width="10" height="10" fill="#ccccff" fill-opacity="0.5"/>
+                    <circle cx="5" cy="5" r="2" fill="#0000cc" />
+                </pattern>
+            </defs>
+        </svg>
+        `;
+        document.body.insertAdjacentHTML('afterbegin', svgPatterns);
+
+        // Realistic Neighborhood Polygons
+        const zones = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": { "name": "West End", "type": "Industrial" },
+                    "geometry": { "type": "Polygon", "coordinates": [[[-0.13, 51.50], [-0.11, 51.505], [-0.12, 51.51], [-0.14, 51.51], [-0.13, 51.50]]] }
+                },
+                {
+                    "type": "Feature",
+                    "properties": { "name": "Downtown", "type": "Residential" },
+                    "geometry": { "type": "Polygon", "coordinates": [[[-0.11, 51.505], [-0.10, 51.505], [-0.10, 51.515], [-0.11, 51.515], [-0.12, 51.51], [-0.11, 51.505]]] }
+                },
+                {
+                    "type": "Feature",
+                    "properties": { "name": "River District", "type": "Commercial" },
+                    "geometry": { "type": "Polygon", "coordinates": [[[-0.10, 51.505], [-0.08, 51.50], [-0.08, 51.51], [-0.10, 51.515], [-0.10, 51.505]]] }
+                }
+            ]
+        };
+
+        // Style Function
+        // Style Function
+        function style(feature) {
+            const opacity = parseFloat(document.getElementById('opacity-slider').value);
+            const showOutline = document.getElementById('outline-toggle').checked;
+
+            const baseStyle = {
+                fillOpacity: opacity,
+                stroke: showOutline
+            };
+
+            switch (feature.properties.type) {
+                case 'Residential':
+                    return { ...baseStyle, color: "#e60000", weight: 2, fillColor: "url(#hatch-red)" };
+                case 'Commercial':
+                    return { ...baseStyle, color: "#0000cc", weight: 2, fillColor: "url(#dot-blue)" };
+                case 'Industrial':
+                    return { ...baseStyle, color: "#006600", weight: 5, dashArray: '5, 10', fillColor: "#ccffcc", fillOpacity: opacity * 0.5 }; // Industrial has solid fill too
+            }
+        }
+
+        function updateStyle() {
+            document.getElementById('opacity-val').textContent = Math.round(document.getElementById('opacity-slider').value * 100) + '%';
+            if (layerGroup) {
+                layerGroup.eachLayer(layer => {
+                    layer.setStyle(style(layer.feature));
+                });
+            }
+        }
+
+        // Add Layer with interactions
+        const layerGroup = L.geoJSON(zones, {
+            style: style,
+            renderer: L.svg(),
+            onEachFeature: (feature, layer) => {
+                // Click interaction
+                layer.bindPopup(`<strong>${feature.properties.name}</strong><br>Zone Type: ${feature.properties.type}`);
+
+                // Accessible Label
+                layer.bindTooltip(`${feature.properties.name} (${feature.properties.type})`, {
+                    sticky: true
+                });
+
+                // Keyboard support (basic focus)
+                if (layer instanceof L.Path) {
+                    // Leaflet paths are focusable if interactive... 
+                    // To handle enter key for popup:
+                    layer.on('add', () => {
+                        if (layer.getElement()) {
+                            layer.getElement().setAttribute('role', 'button');
+                            layer.getElement().setAttribute('aria-label', `${feature.properties.name}, ${feature.properties.type} Zone`);
+                            layer.getElement().setAttribute('tabindex', '0');
+
+                            layer.getElement().addEventListener('keydown', (e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    layer.openPopup();
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        }).addTo(map);
+
+        // Mock Geocoding & Point-in-Polygon Logic
+        // Simple Ray Casting Algorithm for Point in Polygon
+        function isPointInPolygon(point, vs) {
+            // point = [lon, lat], vs = [[lon, lat], ...]
+            var x = point[0], y = point[1];
+            var inside = false;
+            for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+                var xi = vs[i][0], yi = vs[i][1];
+                var xj = vs[j][0], yj = vs[j][1];
+                var intersect = ((yi > y) != (yj > y)) &&
+                    (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+                if (intersect) inside = !inside;
+            }
+            return inside;
+        }
+
+        function searchAddress() {
+            const query = document.getElementById('address-input').value.toLowerCase();
+            const resultDiv = document.getElementById('search-result');
+
+            // 1. Mock Geocoder (Expanded with User Examples)
+            const mockDb = {
+                "123 main st": [-0.115, 51.508], // Inside Downtown
+                "456 river rd": [-0.09, 51.508],  // Inside River District
+
+                // User examples
+                "57 wapping wall": [-0.095, 51.506], // Mapped to River District (Commercial)
+                "62 wapping high st": [-0.092, 51.507], // River District
+                "15 prescot st": [-0.112, 51.511], // Downtown (Residential)
+                "riverside building": [-0.119, 51.502], // Just outside/near river? Let's put it in West End for variety if feasible, or leave outside. West End is industrial.
+                "county hall": [-0.119, 51.502], // Outside
+                "the nightingale school": [-0.118, 51.498], // Outside
+                "fish st hill": [-0.085, 51.510], // Near Commercial
+                "251 tooley st": [-0.125, 51.502], // West End (Industrial)
+                "3 lower thames st": [-0.082, 51.509] // Near Commercial
+            };
+
+            // Simple match
+            let foundCoords = null;
+            for (const [addr, coords] of Object.entries(mockDb)) {
+                if (query.includes(addr)) {
+                    foundCoords = coords;
+                    break;
+                }
+            }
+
+            if (!foundCoords) {
+                // Heuristic backup for partial matches on the new data
+                if (query.includes("wapping")) foundCoords = [-0.095, 51.506];
+                else if (query.includes("tooley")) foundCoords = [-0.125, 51.502];
+                else if (query.includes("prescot")) foundCoords = [-0.112, 51.511];
+
+                else if (query.length > 5) {
+                    foundCoords = [-0.11 + (Math.random() * 0.02 - 0.01), 51.51 + (Math.random() * 0.02 - 0.01)];
+                } else {
+                    resultDiv.innerHTML = "Address not found. Try '57 Wapping Wall' or '251 Tooley St'.";
+                    return;
+                }
+            }
+
+            // 2. Point in Polygon Check
+            let foundZone = null;
+            zones.features.forEach(f => {
+                // Leaflet GeoJSON coords are [lon, lat] nested in rings
+                const polyCoords = f.geometry.coordinates[0];
+                if (isPointInPolygon(foundCoords, polyCoords)) {
+                    foundZone = f.properties;
+                }
+            });
+
+            // 3. Show Result
+            if (foundZone) {
+                resultDiv.innerHTML = `Found address in <strong>${foundZone.name}</strong> (${foundZone.type} Zone).`;
+                // Pan map
+                map.flyTo([foundCoords[1], foundCoords[0]], 15);
+                L.popup().setLatLng([foundCoords[1], foundCoords[0]])
+                    .setContent(`Address Location<br>Zone: ${foundZone.name}`)
+                    .openOn(map);
+            } else {
+                resultDiv.innerHTML = `Address found, but it is <strong>Outside of Zoned Areas</strong>.`;
+                map.flyTo([foundCoords[1], foundCoords[0]], 15);
+                L.popup().setLatLng([foundCoords[1], foundCoords[0]])
+                    .setContent(`Address Location<br>Outside Zoned Area`)
+                    .openOn(map);
+            }
+        }
+
+        // Legend Interaction
+        function focusZone(zoneName) {
+            if (layerGroup) {
+                layerGroup.eachLayer(layer => {
+                    if (layer.feature.properties.name === zoneName) {
+                        map.flyToBounds(layer.getBounds(), { padding: [50, 50] });
+                        layer.openPopup();
+                    }
+                });
+            }
+        }
+    </script>
+
+    <style>
+        .legend-item {
+            cursor: pointer;
+            padding: 5px;
+            border: 2px solid transparent;
+            border-radius: 4px;
+        }
+
+        .legend-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .legend-item:focus {
+            border-color: #005fcc;
+            outline: none;
+            background-color: #e6f0ff;
+        }
+    </style>
+</body>
+
+</html>

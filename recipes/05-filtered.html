@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe 05: Accessible Filtering</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            line-height: 1.5;
+        }
+
+        .filter-controls {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .checkbox-label:hover {
+            background: #eee;
+        }
+
+        .checkbox-label:focus-within {
+            outline: 2px solid #005fcc;
+            background: #eef;
+        }
+
+        .map-container {
+            height: 500px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .status-message {
+            margin-top: 0.5rem;
+            font-weight: bold;
+            color: #444;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <nav>
+            <a href="../index.html">← Back to Menu</a>
+        </nav>
+
+        <h1>Recipe 05: Filtered Map</h1>
+        <p>
+            <strong>Cognitive Load & Keyboard Users:</strong> A map with 100 pins is overwhelming.
+            Filters help users reduce the "noise" and find what they need.
+        </p>
+
+        <!-- Filters -->
+        <div class="filter-controls">
+            <fieldset style="border: none; padding: 0; margin: 0;">
+                <legend style="margin-bottom: 0.5rem; font-weight: bold;">Filter by Category:</legend>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="category" value="library" checked onchange="updateFilters()">
+                        Libraries
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="category" value="park" checked onchange="updateFilters()">
+                        Parks
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="category" value="school" checked onchange="updateFilters()">
+                        Schools
+                    </label>
+                </div>
+            </fieldset>
+
+            <!-- ARIA Live Region for Status Updates -->
+            <div id="status-live" class="status-message" aria-live="polite">
+                Showing all 3 locations.
+            </div>
+        </div>
+
+        <figure>
+            <div id="map" class="map-container" role="application" aria-label="Map of city facilities" tabindex="0">
+            </div>
+            <figcaption class="visually-hidden">Map showing various city facilities. Use filters above to refine the
+                view.</figcaption>
+        </figure>
+
+        <section style="margin-top: 2rem; border-top: 1px solid #ccc; padding-top: 1rem;">
+            <h2>Accessibility Features</h2>
+            <ul>
+                <li><strong>ARIA Live Regions:</strong> When you check a box, a screen reader announces "Showing X
+                    locations". This confirms the action had an effect without the user needing to explore the map
+                    again.</li>
+                <li><strong>Keyboard Focus:</strong> Focus remains on the checkbox after selection, allowing users to
+                    toggle multiple options quickly.</li>
+                <li><strong>Fieldset/Legend:</strong> The checkboxes are grouped semantically, so screen readers
+                    announce "Filter by Category" when entering the group.</li>
+            </ul>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        // 1. Data: Generate ~30 locations spread across London
+        const locations = [];
+        const baseCoords = [51.505, -0.09]; // London Center
+
+        const categories = ['library', 'park', 'school'];
+
+        categories.forEach(type => {
+            for (let i = 1; i <= 10; i++) {
+                // Random offset roughly within bounds
+                const latOffset = (Math.random() - 0.5) * 0.04;
+                const lngOffset = (Math.random() - 0.5) * 0.06;
+
+                locations.push({
+                    name: `${type.charAt(0).toUpperCase() + type.slice(1)} ${i}`,
+                    type: type,
+                    coords: [baseCoords[0] + latOffset, baseCoords[1] + lngOffset]
+                });
+            }
+        });
+
+        // 2. Map Init
+        const map = L.map('map').setView([51.505, -0.09], 14);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(map);
+
+        const markers = [];
+
+        // 3. Render Markers
+        locations.forEach(loc => {
+            const marker = L.marker(loc.coords, {
+                title: loc.name,
+                alt: `${loc.name} (${loc.type})`
+            });
+            // Attach data for filtering
+            marker.category = loc.type;
+            marker.bindPopup(`<b>${loc.name}</b><br>Type: ${loc.type}`);
+
+            // Add to map initially
+            marker.addTo(map);
+            markers.push(marker);
+        });
+
+        // 4. Filtering Logic
+        function updateFilters() {
+            const checkboxes = document.querySelectorAll('input[name="category"]:checked');
+            const activeCategories = Array.from(checkboxes).map(cb => cb.value);
+
+            let visibleCount = 0;
+
+            markers.forEach(marker => {
+                if (activeCategories.includes(marker.category)) {
+                    if (!map.hasLayer(marker)) map.addLayer(marker);
+                    visibleCount++;
+                } else {
+                    if (map.hasLayer(marker)) map.removeLayer(marker);
+                }
+            });
+
+            // Update Live Region
+            const statusDiv = document.getElementById('status-live');
+            if (activeCategories.length === 0) {
+                statusDiv.innerText = "No locations visible.";
+            } else {
+                statusDiv.innerText = `Showing ${visibleCount} location${visibleCount !== 1 ? 's' : ''}.`;
+            }
+        }
+
+        // Initialize
+        updateFilters();
+    </script>
+</body>
+
+</html>

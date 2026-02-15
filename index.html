@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessible Mapping Recipes</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.5;
+    }
+
+    .recipe-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .recipe-item {
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .recipe-item h2 {
+      margin-top: 0;
+    }
+
+    .recipe-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: #005fcc;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .recipe-link:hover {
+      background: #004499;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Accessible Mapping Recipes</h1>
+    <p>A collection of simplified, copy-pasteable patterns for building accessible maps.</p>
+
+    <ul class="recipe-list">
+      <li class="recipe-item">
+        <h2>Recipe 01: The Basics (Wrapper & Semantics)</h2>
+        <p>The "Hello World" of accessible mapping. Learn the minimum valid HTML structure.</p>
+        <p><strong>Key Learnings:</strong> <code>&lt;figure&gt;</code> wrappers, ARIA roles, and enabling keyboard
+          panning.</p>
+        <a href="recipes/01-hello-map.html" class="recipe-link">View Recipe 01</a>
+      </li>
+      <li class="recipe-item">
+        <h2>Recipe 02: Map-List Synchronization</h2>
+        <p>The "Golden Rule" of map accessibility: <em>"Everything on the map must be in a list."</em></p>
+        <p><strong>Key Learnings:</strong> Bi-directional focus management, semantic list buttons, and state
+          synchronization (`aria-current`).</p>
+        <a href="recipes/02-map-list-sync.html" class="recipe-link">View Recipe 02</a>
+      </li>
+      <li class="recipe-item">
+        <h2>Recipe 03: Patterns & Alternatives</h2>
+        <p>How to design for color blindness and provide text-based alternatives for spatial questions.</p>
+        <p><strong>Key Learnings:</strong> SVG Patterns (hatching/dots), HTML-based Legends, and "Address Search" as an
+          accessible alternative to "Point-in-Polygon" tasks.</p>
+        <a href="recipes/03-patterns.html" class="recipe-link">View Recipe 03</a>
+      </li>
+      <li class="recipe-item">
+        <h2>Recipe 04: Accessible Directions</h2>
+        <p>Maps are visual. How do blind users know where to go? We pair the map with a synchronized text list.</p>
+        <p><strong>Key Learnings:</strong> The "Directions List" pattern, and step-by-step focus management.</p>
+        <a href="recipes/04-directions.html" class="recipe-link">View Recipe 04</a>
+      </li>
+      <li class="recipe-item">
+        <h2>Recipe 05: Filtered Map</h2>
+        <p>Too many pins cause cognitive overload and keyboard fatigue. Filters help users find what they need.</p>
+        <p><strong>Key Learnings:</strong> Reducing tab stops via filtering, and semantic ARIA Live Regions.</p>
+        <a href="recipes/05-filtered.html" class="recipe-link">View Recipe 05</a>
+      </li>
+    </ul>
+  </main>
+</body>
+
+</html>
