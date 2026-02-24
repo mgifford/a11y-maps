@@ -39,7 +39,7 @@ This demo is designed to support the following tasks **without requiring a mouse
 | Accessibility Feature | Status | Test Coverage |
 | :--- | :--- | :--- |
 | **Keyboard Navigation** | ✅ Fully supported | Automated (Playwright) |
-| **Screen Reader Support** | ✅ Fully supported | Manual verification + ARIA tests |
+| **Screen Reader Support** | Supported | Manual verification + ARIA tests |
 | **Focus Management** | ✅ Implemented | Automated |
 | **Color Independence** | ✅ Multi-channel encoding | Visual regression tests |
 | **Semantic HTML** | ✅ Required | Code review |
