@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This is a static demonstration of accessibility best practices for municipal GIS web applications. It shows how to make civic map data accessible to blind, low-vision, color-blind, and keyboard-only users by treating maps as a **secondary visual aid** rather than the primary interface.
+This is a static demonstration of accessibility best practices for municipal GIS web applications. It shows how to make civic map data accessible to blind, low-vision, color-blind, and keyboard-only users by treating maps as a **secondary visual aid** rather than the primary interface. This is a proof of concept that definitely needs more testing and feedback. 
 
 ## Audience
 
@@ -207,6 +207,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for:
 - Accessibility testing checklist
 - Code style guidelines
 - Pull request process
+
+## AI Acknowledgement
+AI has been used in the creation of this content/code. 
 
 ## License
 
