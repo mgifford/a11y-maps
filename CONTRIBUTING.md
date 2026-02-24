@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing to this accessibility demonstration project!
 
+**For comprehensive accessibility guidelines, testing procedures, and technical implementation details, see [ACCESSIBILITY.md](ACCESSIBILITY.md).**
+
 ## Purpose
 
 This project demonstrates best practices for making municipal GIS applications accessible to users who are blind, have low vision, are color-blind, or use keyboard-only navigation. It is intended as an educational reference, not a production application.
@@ -33,9 +35,11 @@ Please file an issue with the `enhancement` label.
 
 ### Code Contributions
 
+**Read [ACCESSIBILITY.md](ACCESSIBILITY.md) first** for our WCAG 2.2 AA commitment, testing requirements, and automated testing procedures.
+
 #### Before You Start
 
-1. **Read the documentation** in [accessibility.html](accessibility.html)
+1. **Read the documentation** in [accessibility.html](accessibility.html) and [ACCESSIBILITY.md](ACCESSIBILITY.md)
 2. **Review the existing code** to understand the patterns
 3. **File an issue** to discuss major changes before starting
 
@@ -45,7 +49,7 @@ Please file an issue with the `enhancement` label.
 - All functionality must work with keyboard only
 - All information must be available without the map
 - Test with screen readers (NVDA, VoiceOver, JAWS)
-- Meet WCAG 2.1 AA standards minimum
+- Meet WCAG 2.2 AA standards (see [ACCESSIBILITY.md](ACCESSIBILITY.md))
 - Never rely on color alone
 
 **Code Style**

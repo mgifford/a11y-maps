@@ -324,9 +324,19 @@ If these criteria are not met, the demo has failed regardless of visual quality.
 
 ## Final instruction to agents
 
+**Before modifying code:** Read [ACCESSIBILITY.md](ACCESSIBILITY.md) for our accessibility commitment and technical implementation details.
+
 When in doubt:
 
 - Prefer clarity over cleverness.
 - Prefer text over pixels.
 - Prefer semantics over styling.
 - Prefer fewer features done correctly over more features done poorly.
+
+---
+
+## Related Documentation
+
+- **[ACCESSIBILITY.md](ACCESSIBILITY.md)** - Our WCAG 2.2 AA commitment, testing procedures, and contributor guidelines
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute with accessibility-first approach
+- **[TESTING.md](TESTING.md)** - Automated keyboard and accessibility testing strategy

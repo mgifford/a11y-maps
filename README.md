@@ -94,6 +94,7 @@ a11y-maps/
 │   └── explorer.js                  # Explorer page logic
 │
 ├── 📄 README.md                     # This file
+├── 📄 ACCESSIBILITY.md              # Accessibility commitment & guidelines
 ├── 📄 QUICKSTART.md                 # Getting started guide
 ├── 📄 CONTRIBUTING.md               # Contribution guidelines
 ├── 📄 PROJECT-SUMMARY.md            # Complete implementation summary
@@ -116,6 +117,8 @@ Fallback cities if geolocation denied:
 
 ## Accessibility Features
 
+**For complete accessibility documentation, see [ACCESSIBILITY.md](ACCESSIBILITY.md)**
+
 ### Keyboard Navigation
 - Logical tab order throughout
 - No keyboard traps
@@ -134,6 +137,8 @@ Fallback cities if geolocation denied:
 - Sufficient contrast for all elements
 - Distinguishable patterns at multiple zoom levels
 - Text alternatives for all information
+
+See [ACCESSIBILITY.md](ACCESSIBILITY.md) for our WCAG 2.2 AA commitment, testing procedures, and contributor guidelines.
 
 ## Non-Goals
 
@@ -207,6 +212,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for:
 - Accessibility testing checklist
 - Code style guidelines
 - Pull request process
+
+See [ACCESSIBILITY.md](ACCESSIBILITY.md) for:
+- WCAG 2.2 AA compliance requirements
+- Automated testing procedures
+- Keyboard and screen reader support guidelines
+- AI coding assistant instructions
 
 ## AI Acknowledgement
 AI has been used in the creation of this content/code. 
