@@ -1,0 +1,78 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip map" [ref=e2] [cursor=pointer]:
+    - /url: "#after-map"
+  - main [ref=e3]:
+    - navigation [ref=e4]:
+      - link "← Back to Menu" [active] [ref=e5] [cursor=pointer]:
+        - /url: ../index.html
+    - 'heading "Recipe 03: Patterns & Polygons" [level=1] [ref=e6]'
+    - paragraph [ref=e7]:
+      - text: Color blindness affects ~8% of men.
+      - strong [ref=e8]: Never rely on color alone
+      - text: to distinguish map regions. Use patterns (hatching, dots, borders) alongside color.
+    - generic [ref=e9]:
+      - generic [ref=e10]: "Find Zone by Address:"
+      - generic [ref=e11]:
+        - combobox "Find Zone by Address:" [ref=e12]
+        - button "Search" [ref=e13] [cursor=pointer]
+      - generic [ref=e15]: "Try: 57 Wapping Wall, 15 Prescot St, 251 Tooley St"
+    - generic "Map Display Controls" [ref=e16]:
+      - generic [ref=e17]:
+        - generic [ref=e18]: "Zone Opacity: 100%"
+        - 'slider "Zone Opacity: 100%" [ref=e19]': "1"
+      - generic [ref=e21]:
+        - checkbox "Show Outlines" [checked] [ref=e22]
+        - text: Show Outlines
+    - generic "Zoning Legend. Click items to find on map." [ref=e23]:
+      - button "West End (Industrial) Green, Double Border" [ref=e24] [cursor=pointer]:
+        - generic [ref=e26]:
+          - strong [ref=e27]: West End (Industrial)
+          - text: Green, Double Border
+      - button "Downtown (Residential) Red, Diagonal Hatch" [ref=e28] [cursor=pointer]:
+        - generic [ref=e30]:
+          - strong [ref=e31]: Downtown (Residential)
+          - text: Red, Diagonal Hatch
+      - button "River District (Commercial) Blue, Polka Dot" [ref=e32] [cursor=pointer]:
+        - generic [ref=e34]:
+          - strong [ref=e35]: River District (Commercial)
+          - text: Blue, Polka Dot
+    - figure "Zoning map showing Residential (diagonal hatch), Commercial (dots), and Industrial (double border) zones." [ref=e36]:
+      - generic [ref=e37]: Zoning map showing Residential (diagonal hatch), Commercial (dots), and Industrial (double border) zones.
+      - application "Zoning map" [ref=e38]
+    - generic [ref=e39]:
+      - heading "Accessibility Features" [level=2] [ref=e40]
+      - list [ref=e41]:
+        - listitem [ref=e42]:
+          - strong [ref=e43]: "Redundant Coding:"
+          - text: Regions are distinguished by Color + Pattern (SVG fills). This accommodates color blindness.
+        - listitem [ref=e44]:
+          - strong [ref=e45]: "HTML Legend:"
+          - text: The legend is not part of the map canvas image. It is standard HTML text, making it accessible to screen readers and searchable.
+        - listitem [ref=e46]:
+          - strong [ref=e47]: "Semantic Legend Buttons:"
+          - text: Legend items use real
+          - code [ref=e48]: <button>
+          - text: elements instead of
+          - code [ref=e49]: role="button"
+          - text: divs, providing native keyboard and screen reader support.
+        - listitem [ref=e50]:
+          - strong [ref=e51]: "The \"Search Alternative\":"
+          - text: Spatial queries ("What zone is this address in?") are hard for blind users. We provide a simple text-based search form that answers the user's question directly, bypassing the map entirely.
+        - listitem [ref=e52]:
+          - strong [ref=e53]: "Skip Link:"
+          - text: A visible-on-focus skip link lets keyboard users bypass the map.
+      - heading "Try This" [level=2] [ref=e54]
+      - list [ref=e55]:
+        - listitem [ref=e56]:
+          - strong [ref=e57]: "Use the Search:"
+          - text: Enter "57 Wapping Wall" and press Enter. Notice how it finds the zone without you needing to look at the map.
+        - listitem [ref=e58]:
+          - strong [ref=e59]: "Observe Visual Connection:"
+          - text: When a result is found, we fly the map to the location, visually connecting the data point to its context.
+        - listitem [ref=e60]:
+          - strong [ref=e61]: "Interactive Legend:"
+          - text: Click or Tab to the legend items to jump to that zone.
+```

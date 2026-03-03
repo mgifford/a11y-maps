@@ -59,8 +59,11 @@ All functionality is accessible via keyboard:
 ### Map Container
 - **Tab** - Focus the map container (it has `tabindex="0"`)
 - **Arrow Keys** - Pan the map while focused
+- **+** - Zoom in (Leaflet keyboard shortcut)
+- **-** - Zoom out (Leaflet keyboard shortcut)
 - **Enter** - Activate focused map marker
 - **Tab** - Move to next map marker or out of map
+- **Skip map link** - A visible-on-focus skip link before each map lets users jump past it
 
 ### List Navigation
 - **Arrow Up/Down** - Navigate list items
@@ -110,6 +113,16 @@ We **never rely on color alone**. Utilities and features use:
 - Works at 200% browser zoom
 - No horizontal scrolling required
 - Touch targets remain at least 44×44 CSS pixels
+
+### Mobile and Touch Accessibility
+- All map interactions are operable with a single pointer (no multi-finger gestures required)
+- Zoom controls provide button-based alternatives to pinch-to-zoom
+- Touch targets meet the 44×44 CSS pixel minimum
+- Tested for compatibility with iOS VoiceOver and Android TalkBack
+
+### Windows High Contrast Mode
+- Maps and UI are tested in Windows High Contrast (forced-colors) mode
+- Information is never conveyed by color alone — patterns and shapes remain meaningful
 
 ## 7. Data Model & Semantic Transparency
 
@@ -281,6 +294,12 @@ For authoritative accessibility guidance, we reference:
 - **ARIA Authoring Practices** - https://www.w3.org/WAI/ARIA/apg/
 - **WAI-YAML-LD** (machine-readable standards) - https://github.com/mgifford/wai-yaml-ld
 
+### Maps Accessibility
+- **Maps Accessibility Best Practices** - https://github.com/mgifford/ACCESSIBILITY.md/blob/main/examples/MAPS_ACCESSIBILITY_BEST_PRACTICES.md
+- **Sparkgeo — The Accessibility of Web Maps** - https://sparkgeo.com/blog/the-accessibility-of-web-maps/
+- **AccessibilityOz — Interactive Map Accessibility Principles** - https://www.accessibilityoz.com/factsheets/interactive-maps/interactive-map-accessibility-principles/
+- **maptime/map-accessibility-guidelines** - https://github.com/maptime/map-accessibility-guidelines
+
 ### Community Resources
 - **WebAIM** - https://webaim.org/
 - **The A11Y Project** - https://www.a11yproject.com/
@@ -304,7 +323,23 @@ All dependencies are AGPL-compatible and documented in [ATTRIBUTION.md](ATTRIBUT
 
 Always contact local authorities (811 in North America) before digging.
 
-## 16. Success Criteria
+## 16. Definition of Done for Map Features
+
+A map feature is complete only when:
+
+- [ ] All map controls (zoom, pan, layer toggles) have accessible names
+- [ ] All markers and interactive features are keyboard-operable (`keyboard: true` in Leaflet)
+- [ ] A skip link is provided before the map container
+- [ ] A text alternative (list, table, or directions) is present alongside the map
+- [ ] Color is not the only means of conveying information (patterns + text labels used)
+- [ ] Color contrast requirements are met for all labels and controls (4.5:1 text, 3:1 UI)
+- [ ] Selection changes are announced via an ARIA live region
+- [ ] Manual keyboard and screen reader checks pass
+- [ ] Tested in Windows High Contrast (forced-colors) mode
+- [ ] Touch targets are at least 44×44 CSS pixels
+- [ ] No blocking accessibility defects remain
+
+## 17. Success Criteria
 
 This demo succeeds if:
 
@@ -325,4 +360,4 @@ If these criteria are not met, the demo has failed regardless of visual quality.
 - **Review the code:** [js/accessibility.js](js/accessibility.js)
 - **Check the tests:** [tests/keyboard-verification.spec.js](tests/keyboard-verification.spec.js)
 
-**Last updated:** 2026-02-24
+**Last updated:** 2026-03-03
