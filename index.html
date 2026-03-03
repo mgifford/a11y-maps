@@ -43,6 +43,26 @@
     .recipe-link:hover {
       background: #004499;
     }
+
+    .site-footer {
+      margin-top: 2rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid #ccc;
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    .site-footer a {
+      color: #005fcc;
+    }
+
+    .user-testing-notice {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+    }
   </style>
 </head>
 
@@ -87,6 +107,22 @@
       </li>
     </ul>
   </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p>
+      <strong>Open Source Project</strong> &mdash;
+      This project is <a href="https://github.com/mgifford/a11y-maps">open source on GitHub</a>
+      and welcomes contributions. If you find accessibility issues, have ideas for new recipes,
+      or want to improve the documentation, please
+      <a href="https://github.com/mgifford/a11y-maps/issues">open an issue</a> or submit a pull request.
+    </p>
+    <div class="user-testing-notice" role="note">
+      <strong>⚠️ Important:</strong> These accessibility patterns are design recommendations based on
+      WCAG guidelines and best practices. <strong>They must be tested with real users with disabilities</strong>
+      before relying on them in production. Automated tests and expert review are a starting point &mdash;
+      they do not replace usability testing with people who use assistive technologies.
+    </div>
+  </footer>
 </body>
 
 </html>
