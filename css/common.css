@@ -191,6 +191,27 @@ body:not(.using-mouse) *:focus {
   font-size: 0.875rem;
 }
 
+/* Experimental notice banner */
+.experimental-notice {
+  background-color: #fff3cd;
+  border: 2px solid var(--color-warning);
+  border-radius: var(--border-radius);
+  color: #5c4a00;
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin: var(--spacing-md) 0 0 0;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.experimental-notice p {
+  margin: var(--spacing-xs) 0;
+}
+
+.experimental-notice a {
+  color: #5c4a00;
+  font-weight: bold;
+}
+
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
   margin-top: var(--spacing-lg);

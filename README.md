@@ -1,5 +1,13 @@
 # Accessible Municipal Map Demo
 
+> ## ⚠️ EXPERIMENTAL — AI-Generated Content Requires Real-World Validation
+>
+> **Most of this site was generated with AI assistance.** All patterns, code, and recommendations need to be validated with real users and in real-world deployments before relying on them.
+>
+> **Impacts may vary** based on where and how these patterns are implemented. Results in your context may differ from what is described here.
+>
+> **We need your feedback!** If you try any of these patterns — whether you get positive or negative results — please [open an issue](https://github.com/mgifford/a11y-maps/issues) with your findings. Include links and references so claims can be discussed and validated by the community.
+
 ## Purpose
 
 This is a static demonstration of accessibility best practices for municipal GIS web applications. It shows how to make civic map data accessible to blind, low-vision, color-blind, and keyboard-only users by treating maps as a **secondary visual aid** rather than the primary interface. This is a proof of concept that definitely needs more testing and feedback. 
