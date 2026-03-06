@@ -56,12 +56,15 @@
       color: #005fcc;
     }
 
-    .user-testing-notice {
+    .user-testing-notice,
+    .experimental-notice {
       margin-top: 1rem;
       padding: 0.75rem 1rem;
       background: #fff3cd;
-      border: 1px solid #ffc107;
+      border: 2px solid #ffc107;
       border-radius: 4px;
+      color: #5c4a00;
+      text-align: left;
     }
   </style>
 </head>
@@ -109,6 +112,13 @@
   </main>
 
   <footer class="site-footer" role="contentinfo">
+    <div class="experimental-notice" role="note" aria-label="Experimental project notice">
+      <strong>⚠️ EXPERIMENTAL — AI-Generated Content:</strong> Most of this site was generated with AI assistance.
+      All patterns and recommendations need to be validated with real users and in real-world deployments.
+      <strong>Impacts may vary</strong> based on where and how these patterns are implemented.
+      Please <a href="https://github.com/mgifford/a11y-maps/issues">open an issue</a> with your findings
+      — positive or negative — including links and references so claims can be discussed.
+    </div>
     <p>
       <strong>Open Source Project</strong> &mdash;
       This project is <a href="https://github.com/mgifford/a11y-maps">open source on GitHub</a>
