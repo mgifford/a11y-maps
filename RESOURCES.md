@@ -39,6 +39,50 @@ The library we are using in our recipes.
 ### Mapbox GL JS
 -   **Note:** Powerful but requires significant custom effort (ARIA management) to match Leaflet's baseline accessibility.
 
+---
+
+## Open Source Accessible Map Projects
+
+The following open source projects demonstrate accessible and indoor mapping approaches that complement the patterns explored here.
+
+### Indoor Wayfinding & Navigation
+
+#### [indoor-wayfinder (KnotzerIO)](https://github.com/KnotzerIO/indoor-wayfinder)
+*   **Live Demo:** [indoor.knotzer.io](https://indoor.knotzer.io/?position=v35)
+*   An indoor wayfinding tool built on open standards. A good example of applying accessibility thinking to interior navigation.
+
+#### [OpenIndoorMaps](https://github.com/openindoormaps/openindoormaps)
+*   **Live Demo:** [openindoormaps.vercel.app](https://openindoormaps.vercel.app/)
+*   An open source project for rendering and navigating indoor maps, focused on accessibility and open data.
+
+### Accessible Map Implementations
+
+#### [DEFRA Interactive Map](https://github.com/DEFRA/interactive-map)
+*   A UK government (Department for Environment, Food & Rural Affairs) interactive map component designed with accessibility requirements in mind.
+
+#### [AccMaps (tillgrosse)](https://github.com/tillgrosse/accmaps)
+*   A research and prototype project focused on making maps accessible to screen reader users.
+
+#### [accessible-map (sammyhawkrad)](https://github.com/sammyhawkrad/accessible-map)
+*   A lightweight accessible map implementation demonstrating keyboard navigation and screen reader support patterns.
+
+#### [IndoorOSMtoSITConverter (AccessibleMaps)](https://github.com/AccessibleMaps/IndoorOSMtoSITConverter)
+*   Converts OpenStreetMap indoor data to the SIT (Spatial Indoor Topology) format, enabling accessible indoor navigation with OSM data.
+
+#### [2.5D Indoor Maps (Accessible-InfoPoint)](https://github.com/Accessible-InfoPoint/2.5D-Indoor-Maps)
+*   A 2.5D rendering approach to indoor maps intended to improve comprehension and accessibility for users with visual or cognitive impairments.
+
+---
+
+## Research & Academic References
+
+### [Systematically Evaluating Equivalent Purpose for Digital Maps](https://arxiv.org/abs/2512.05310)
+*   **Authors/Source:** arXiv preprint (2512.05310)
+*   **Summary:** Introduces a systematic framework for evaluating whether a digital map has an accessible equivalent that fulfills the same purpose for users who cannot use the visual map. While this goes beyond what is commonly required in practice, it provides a rigorous lens for assessing true equivalence rather than surface-level compliance.
+*   **Relevance:** Directly applicable to the core principle of this project — that text alternatives must serve the same *purpose*, not merely describe map appearance.
+
+---
+
 ## Summary of Best Practices
 
 Based on the resources above, here is the "Gold Standard" checklist for accessible maps:
