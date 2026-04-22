@@ -105,6 +105,7 @@ a11y-maps/
 ├── 📄 ACCESSIBILITY.md              # Accessibility commitment & guidelines
 ├── 📄 QUICKSTART.md                 # Getting started guide
 ├── 📄 CONTRIBUTING.md               # Contribution guidelines
+├── 📄 RESOURCES.md                  # External links, tools & research references
 ├── 📄 PROJECT-SUMMARY.md            # Complete implementation summary
 ├── 📄 LICENSE                       # AGPL license
 └── 📄 .gitignore                    # Git ignore patterns
@@ -226,6 +227,11 @@ See [ACCESSIBILITY.md](ACCESSIBILITY.md) for:
 - Automated testing procedures
 - Keyboard and screen reader support guidelines
 - AI coding assistant instructions
+
+See [RESOURCES.md](RESOURCES.md) for:
+- External guidelines and articles
+- Open source accessible map projects
+- Research and academic references
 
 ## AI Acknowledgement
 AI has been used in the creation of this content/code. 
