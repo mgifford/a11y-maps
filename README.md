@@ -233,6 +233,12 @@ See [RESOURCES.md](RESOURCES.md) for:
 - Open source accessible map projects
 - Research and academic references
 
+See [REFERENCES.md](REFERENCES.md) for:
+- Academic papers on equivalent-purpose evaluation for digital maps
+- Indoor wayfinding and navigation projects
+- Government and civic map components
+- Accessible map pattern implementations
+
 ## AI Acknowledgement
 AI has been used in the creation of this content/code. 
 
