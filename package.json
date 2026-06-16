@@ -14,6 +14,6 @@
     "@playwright/test": "^1.58.2",
     "http-server": "^14.1.1",
     "playwright": "^1.58.2",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   }
 }
